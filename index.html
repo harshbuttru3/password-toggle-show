@@ -11,19 +11,48 @@
         <input type="password" id="password">
         <img src="eye-close.png" alt="hidden" id="eye" onclick="toggleShow()">
     </div>
+    <p id="msg">Password is <span id="strength"></span></p>
 
     <script>
-        let eye = document.getElementById("eye")
-        let pass = document.getElementById("password")
-        function toggleShow(){
-            if(pass.type == "password"){
-                pass.type = "text"
-                eye.src = "eye-open.png"
-            } else{
-                pass.type = "password"
-                eye.src = "eye-close.png"
+        let eye = document.getElementById("eye");
+        let pass = document.getElementById("password");
+        let msg = document.getElementById("msg");
+        let str = document.getElementById("strength");
+        let main = document.getElementById("main")
+
+        function toggleShow() {
+            if (pass.type === "password") {
+                pass.type = "text";
+                eye.src = "eye-open.png";
+            } else {
+                pass.type = "password";
+                eye.src = "eye-close.png";
             }
         }
+
+        function checkPassword() {
+            if (pass.value.length > 0) {
+                msg.style.display = "block";
+            } else {
+                msg.style.display = "none";
+            }
+            if(pass.value.length < 4){
+                str.innerHTML = "Weak";
+                main.style.borderColor = "#ff5925";
+                msg.style.color = "#ff5935"
+            } else if(pass.value.length < 8 && pass.value.length > 4){
+                str.innerHTML = "Medium";
+                main.style.borderColor = "yellow"
+                msg.style.color = "yellow";
+            } else if(pass.value.length > 8){
+                str.innerHTML = "Strong";
+                main.style.borderColor = "#04f846";
+                msg.style.color = "#04f846";
+            }
+        }
+
+        pass.addEventListener("input", checkPassword);
+        //  checkPassword(); 
     </script>
 </body>
 </html>
